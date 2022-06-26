@@ -1,0 +1,49 @@
+<mat-drawer-container class="sidenav-container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <h3>All Exams</h3>
+    <p>Higher Differential Equations 1</p>
+    <p>Higher Differential Equations 2</p>
+    <button (click)="showFiller = !showFiller" class="list-btn">
+      Linear Algebra 1
+    </button>
+    <hr *ngIf="showFiller">
+    <mat-card *ngIf="showFiller" class="mat-elevation-z4">
+      <mat-card-title>Linear Algebra 1</mat-card-title>
+      <mat-card-subtitle>by lucasKienast</mat-card-subtitle>
+      <mat-card-content>
+        <p>No. questions: 10</p>
+        <p>No. participants: 57</p>
+        <p>Avg. result: 60%</p>
+      </mat-card-content>
+      <mat-divider inset></mat-divider>
+      <mat-card-actions align="end">
+        <button type="button" mat-button (click)="showFiller = !showFiller">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button mat-raised-button>Results</button>
+        <button mat-raised-button color="primary">Sit</button>
+      </mat-card-actions>
+    </mat-card>
+    <hr *ngIf="showFiller">
+    <p>Linear Algebra 2</p>
+    <p>Analysis 1</p>
+    <p>Analysis 2</p>
+    <p>Electrical Engineering 1</p>
+    <p>Electrical Engineering 2</p>
+    <p>Signal Theory 1+2</p>
+  </mat-drawer>
+
+  <mat-card class="sidenav-content">
+    <div>
+      <button *ngIf="sidebarOpen" type="button" mat-button (click)="drawer.toggle(sidebarOpen = !sidebarOpen)">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button *ngIf="!sidebarOpen" type="button" mat-button (click)="drawer.toggle(sidebarOpen = !sidebarOpen)">
+        <mat-icon>menu_open</mat-icon>
+      </button>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-card>
+
+
+</mat-drawer-container>

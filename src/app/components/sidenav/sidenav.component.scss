@@ -1,0 +1,19 @@
+.sidenav-container {
+  width: 100%;
+  height: calc(100vh - 72px);
+}
+
+.sidenav-content {
+  height: calc(100vh - 104px);
+}
+
+.sidenav {
+  padding: 20px;
+}
+
+.list-btn {
+  background: none!important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+}
