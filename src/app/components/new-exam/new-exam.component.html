@@ -1,360 +1,389 @@
 <mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
 
-  <mat-step [stepControl]="firstQuestionFormGroup">
-    <form [formGroup]="firstQuestionFormGroup">
-      <ng-template matStepLabel>Question 1</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
-        </div>
-      </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{firstQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(firstQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
+  <form [formGroup]="createExamForm" (ngSubmit)="submitExamCreation()">
 
-  <mat-step [stepControl]="secondQuestionFormGroup">
-    <form [formGroup]="secondQuestionFormGroup">
-      <ng-template matStepLabel>Question 2</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
-        </div>
-      </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{secondQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(secondQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
+    <div formGroupName="questionFormGroups">
 
-  <mat-step [stepControl]="thirdQuestionFormGroup">
-    <form [formGroup]="thirdQuestionFormGroup">
-      <ng-template matStepLabel>Question 3</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="firstQuestionFormGroup">
+        <div class="form-group">
+          <mat-step >
+            <ng-template matStepLabel>Question 1</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('firstQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{thirdQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(thirdQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="fourthQuestionFormGroup">
-    <form [formGroup]="fourthQuestionFormGroup">
-      <ng-template matStepLabel>Question 4</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="secondQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 2</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('secondQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{fourthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(fourthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="fifthQuestionFormGroup">
-    <form [formGroup]="fifthQuestionFormGroup">
-      <ng-template matStepLabel>Question 5</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="thirdQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 3</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('thirdQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{fifthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(fifthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="sixthQuestionFormGroup">
-    <form [formGroup]="sixthQuestionFormGroup">
-      <ng-template matStepLabel>Question 6</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="fourthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 4</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('fourthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{sixthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(sixthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="seventhQuestionFormGroup">
-    <form [formGroup]="seventhQuestionFormGroup">
-      <ng-template matStepLabel>Question 7</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="fifthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 5</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('fifthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{seventhQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(seventhQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="eigthQuestionFormGroup">
-    <form [formGroup]="eigthQuestionFormGroup">
-      <ng-template matStepLabel>Question 8</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="sixthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 6</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('sixthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{eigthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(eigthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="ninthQuestionFormGroup">
-    <form [formGroup]="ninthQuestionFormGroup">
-      <ng-template matStepLabel>Question 9</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="seventhQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 7</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('seventhQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{ninthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(ninthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="tenthQuestionFormGroup">
-    <form [formGroup]="tenthQuestionFormGroup">
-      <ng-template matStepLabel>Question 10</ng-template>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Question statement</mat-label>
-            <input matInput formControlName="questionControl" required>
-          </mat-form-field>
+      <div formGroupName="eigthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 8</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('eighthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="correctAnswerControl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
-          <mat-form-field appearance="fill">
-            <mat-label>Possible Answer</mat-label>
-            <input matInput formControlName="{{answerControlName}}" required>
-          </mat-form-field>
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{tenthQuestionFormGroup.get('correctAnswerControl')?.value}}</div>
-      <div>
-        <button mat-button
-                (click)="showForm(tenthQuestionFormGroup)"
-                matStepperNext>
-          Next
-        </button>
-      </div>
-    </form>
-  </mat-step>
 
-  <mat-step [stepControl]="userCredentialsFormGroup">
-    <form [formGroup]="userCredentialsFormGroup">
-      <ng-template matStepLabel>Done</ng-template>
+      <div formGroupName="ninthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 9</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('ninthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
+        </div>
+      </div>
 
-      <p>You have reached the end of the exam creation process! Enter your username and password to upload this new exam.</p>
-      <div class="container">
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Username</mat-label>
-            <input matInput formControlName="usernameControl" required>
-          </mat-form-field>
-        </div>
-        <div class="row">
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="passwordControl" type="password" required>
-          </mat-form-field>
+      <div formGroupName="tenthQuestionFormGroup">
+        <div class="form-group">
+          <mat-step>
+            <ng-template matStepLabel>Question 10</ng-template>
+            <div class="container">
+              <div class="row">
+                <mat-form-field appearance="fill">
+                  <mat-label>Question statement</mat-label>
+                  <input matInput formControlName="questionControl" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <br>
+            <p>Select the correct answer below.</p>
+            <mat-radio-group
+              aria-labelledby="example-radio-group-label"
+              class="example-radio-group"
+              formControlName="correctAnswerControl">
+              <mat-radio-button class="example-radio-button" *ngFor="let answerControlName of answerControlNames" [value]="answerControlName">
+                <mat-form-field appearance="fill">
+                  <mat-label>Possible Answer</mat-label>
+                  <input matInput formControlName="{{answerControlName}}" required>
+                </mat-form-field>
+              </mat-radio-button>
+            </mat-radio-group>
+            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('tenthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
+            <div>
+              <button mat-button matStepperNext>
+                Next
+              </button>
+            </div>
+          </mat-step>
         </div>
       </div>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-        <button mat-button (click)="submitExamCreation()">Submit</button>
+
+    </div>
+
+    <div formGroupName="userFormGroup">
+      <div class="form-group">
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You have reached the end of the exam creation process! Enter your username and password to upload this new exam.</p>
+          <div class="container">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="usernameControl" required>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="passwordControl" type="password" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button type="submit" mat-button>Submit</button>
+          </div>
+        </mat-step>
       </div>
-    </form>
-  </mat-step>
+    </div>
+
+  </form>
 
 </mat-vertical-stepper>
