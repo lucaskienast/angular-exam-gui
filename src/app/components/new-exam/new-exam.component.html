@@ -378,8 +378,12 @@
           <div>
             <button mat-button matStepperPrevious>Back</button>
             <button mat-button (click)="stepper.reset()">Reset</button>
-            <button type="submit" mat-button>Submit</button>
+            <button type="submit" (click)="submitExamCreation()" mat-button>Submit</button>
           </div>
+          <br>
+          <mat-error *ngIf="createExamForm.invalid">
+            Please fill out all fields, select the correct answers, and enter your credentials.
+          </mat-error>
         </mat-step>
       </div>
     </div>

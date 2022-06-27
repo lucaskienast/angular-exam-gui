@@ -106,11 +106,12 @@ export class NewExamComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showForm(formGroup: FormGroup): void {
-    console.log(formGroup);
-  }
-
   submitExamCreation(): void {
+    if (this.createExamForm.valid) {
+      console.log("FORM VALID");
+    } else {
+      console.log("FORM INVALID");
+    }
     console.log(this.createExamForm);
   }
 
