@@ -1,6 +1,11 @@
-<mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
+<form [formGroup]="createExamForm" (ngSubmit)="submitExamCreation()">
 
-  <form [formGroup]="createExamForm" (ngSubmit)="submitExamCreation()">
+  <mat-form-field appearance="fill">
+    <mat-label>Exam Name</mat-label>
+    <input matInput formControlName="testNameControl" required>
+  </mat-form-field>
+
+  <mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
 
     <div formGroupName="questionFormGroups">
 
@@ -388,6 +393,5 @@
       </div>
     </div>
 
-  </form>
-
-</mat-vertical-stepper>
+  </mat-vertical-stepper>
+</form>
