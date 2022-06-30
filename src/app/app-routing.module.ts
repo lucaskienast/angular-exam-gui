@@ -6,7 +6,7 @@ import {NewExamComponent} from "./components/new-exam/new-exam.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'sit-exam', component: SitExamComponent },
+  { path: 'sit-exam/:id', component: SitExamComponent },
   { path: 'new-exam', component: NewExamComponent },
 ];
 

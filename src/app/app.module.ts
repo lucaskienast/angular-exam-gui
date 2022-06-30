@@ -19,7 +19,6 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import { ExamQuestionComponent } from './components/exam-question/exam-question.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import { NewExamComponent } from './components/new-exam/new-exam.component';
 import {MatRadioModule} from "@angular/material/radio";
@@ -32,7 +31,6 @@ import {MatRadioModule} from "@angular/material/radio";
     SidenavComponent,
     HomeComponent,
     SitExamComponent,
-    ExamQuestionComponent,
     NewExamComponent,
   ],
   imports: [

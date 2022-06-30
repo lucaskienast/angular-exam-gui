@@ -1,60 +1,96 @@
-<mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel>Question 1</ng-template>
-      <label id="example-radio-group-label">What is the area of a triangle?</label>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        formControlName="firstCtrl">
-        <mat-radio-button class="example-radio-button" *ngFor="let answer of answers" [value]="answer">
-          {{answer}}
-        </mat-radio-button>
-      </mat-radio-group>
-      <div>Your answer: {{firstFormGroup.get('firstCtrl')?.value}}</div>
-      <div>
-        <button mat-button matStepperNext>Next</button>
+<form [formGroup]="sendExamWithResultAndAnswersFormGroup" (ngSubmit)="sendExamWithResultAndAnswers()">
+
+  <mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
+
+    <div formGroupName="givenAnswersFormGroup">
+
+      <div class="form-group">
+        <mat-step>
+          <ng-template matStepLabel>Question 1</ng-template>
+          <label id="example-radio-group-label-1">{{examToSitDto?.questions[0]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            formControlName="answer1Control">
+
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[0]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer1Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 2</ng-template>
+          <label id="example-radio-group-label-2">{{examToSitDto?.questions[1]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer2Control">
+
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[1]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer1Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
       </div>
-    </form>
-  </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Question 2">
-    <form [formGroup]="secondFormGroup">
 
-      <app-exam-question></app-exam-question>
+    </div>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
+    <div formGroupName="userFormGroup">
+
+      <div class="form-group">
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You have reached the end of the exam! Enter your username and password to upload your answers and get your results.</p>
+          <div class="container">
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput formControlName="usernameControl" required>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="passwordControl" type="password" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+            <button type="submit" (click)="sendExamWithResultAndAnswers()" mat-button>Submit</button>
+          </div>
+          <br>
+          <mat-error *ngIf="sendExamWithResultAndAnswersFormGroup.invalid">
+            Please fill out all fields, select the correct answers, and enter your credentials.
+          </mat-error>
+        </mat-step>
+      </div>
+
+    </div>
+
+    <mat-step>
+      <ng-template matStepLabel>Results</ng-template>
+      <p>90%</p>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
-    </form>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You have reached the end of the exam! Enter your username and password to hand in your solutions.</p>
-    <mat-form-field appearance="fill">
-      <mat-label>Username</mat-label>
-      <input matInput required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input matInput required type="password">
-    </mat-form-field>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Results</ng-template>
-    <p>Here are your exam results!</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
-  </mat-step>
-</mat-vertical-stepper>
+    </mat-step>
+
+  </mat-vertical-stepper>
+
+</form>
+
