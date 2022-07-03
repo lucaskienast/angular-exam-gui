@@ -1,4 +1,4 @@
-<form [formGroup]="sendExamWithResultAndAnswersFormGroup" (ngSubmit)="sendExamWithResultAndAnswers()">
+<form [formGroup]="sendExamWithResultAndAnswersFormGroup">
 
   <mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
 
@@ -12,11 +12,9 @@
             aria-labelledby="example-radio-group-label"
             class="example-radio-group"
             formControlName="answer1Control">
-
             <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[0]?.possibleAnswers" [value]="possibleAnswer">
               {{possibleAnswer.answer}}
             </mat-radio-button>
-
           </mat-radio-group>
           <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
             .get('givenAnswersFormGroup')?.get('answer1Control')?.value}}</div>
@@ -31,14 +29,148 @@
                            aria-labelledby="example-radio-group-label"
                            class="example-radio-group"
                            formControlName="answer2Control">
-
             <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[1]?.possibleAnswers" [value]="possibleAnswer">
               {{possibleAnswer.answer}}
             </mat-radio-button>
-
           </mat-radio-group>
           <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer1Control')?.value}}</div>
+            .get('givenAnswersFormGroup')?.get('answer2Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 3</ng-template>
+          <label id="example-radio-group-label-3">{{examToSitDto?.questions[2]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer3Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[2]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer3Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 4</ng-template>
+          <label id="example-radio-group-label-4">{{examToSitDto?.questions[3]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer4Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[3]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer4Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 5</ng-template>
+          <label id="example-radio-group-label-5">{{examToSitDto?.questions[4]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer5Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[4]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer5Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 6</ng-template>
+          <label id="example-radio-group-label-6">{{examToSitDto?.questions[5]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer6Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[5]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer6Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 7</ng-template>
+          <label id="example-radio-group-label-7">{{examToSitDto?.questions[6]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer7Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[6]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer7Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 8</ng-template>
+          <label id="example-radio-group-label-8">{{examToSitDto?.questions[7]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer8Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[7]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer8Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 9</ng-template>
+          <label id="example-radio-group-label-9">{{examToSitDto?.questions[8]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer9Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[8]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer9Control')?.value}}</div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Question 10</ng-template>
+          <label id="example-radio-group-label-10">{{examToSitDto?.questions[9]?.questionName}}</label>
+          <mat-radio-group *ngIf="examToSitDto?.examDto?.examName?.length >= 1"
+                           aria-labelledby="example-radio-group-label"
+                           class="example-radio-group"
+                           formControlName="answer10Control">
+            <mat-radio-button class="example-radio-button" *ngFor="let possibleAnswer of examToSitDto?.questions[9]?.possibleAnswers" [value]="possibleAnswer">
+              {{possibleAnswer.answer}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
+            .get('givenAnswersFormGroup')?.get('answer10Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -80,15 +212,6 @@
       </div>
 
     </div>
-
-    <mat-step>
-      <ng-template matStepLabel>Results</ng-template>
-      <p>90%</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-    </mat-step>
 
   </mat-vertical-stepper>
 

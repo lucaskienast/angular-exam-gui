@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -16,12 +15,15 @@ import {MatCardModule} from "@angular/material/card";
 import {MatDividerModule} from "@angular/material/divider";
 import { SitExamComponent } from './components/sit-exam/sit-exam.component';
 import {MatStepperModule} from "@angular/material/stepper";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { NewExamComponent } from './components/new-exam/new-exam.component';
 import {MatRadioModule} from "@angular/material/radio";
+import {MyResultComponent} from "./components/my-result/my-result.component";
+import { AllExamsComponent } from './components/all-exams/all-exams.component';
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import {MatRadioModule} from "@angular/material/radio";
     HomeComponent,
     SitExamComponent,
     NewExamComponent,
+    MyResultComponent,
+    AllExamsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +53,11 @@ import {MatRadioModule} from "@angular/material/radio";
     MatFormFieldModule,
     MatInputModule,
     MatGridListModule,
-    MatRadioModule
+    MatRadioModule,
+    FormsModule,
+    MatTableModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

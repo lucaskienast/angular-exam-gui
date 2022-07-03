@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {GetExamToSitDto} from "../models/GetExamToSitDto";
 import {SitExamService} from "./sit-exam.service";
 import {throwError} from "rxjs";
+import {SitExamPayload} from "./sit-exam-payload";
+import {GivenAnswerDto} from "../models/GivenAnswerDto";
+import {ExamResultDto} from "../models/ExamResultDto";
 
 @Component({
   selector: 'app-sit-exam',
@@ -15,7 +18,17 @@ export class SitExamComponent implements OnInit {
   examId: number;
   examToSitDto: GetExamToSitDto;
 
-  answers: string[] = ['A = 0.5bh', 'A = b/h', 'A = 5h/b', 'A = 5bh'];
+  answerControls: string[] = [
+    'answer1Control',
+    'answer2Control',
+    'answer3Control',
+    'answer4Control',
+    'answer6Control',
+    'answer7Control',
+    'answer8Control',
+    'answer9Control',
+    'answer10Control',
+  ];
 
   sendExamWithResultAndAnswersFormGroup: FormGroup;
 
@@ -23,7 +36,8 @@ export class SitExamComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private activateRoute: ActivatedRoute,
-              private sitExamService: SitExamService) {
+              private sitExamService: SitExamService,
+              private router: Router) {
 
     this.examToSitDto = {
       examDto: {
@@ -36,60 +50,37 @@ export class SitExamComponent implements OnInit {
           password: undefined
         }
       },
-      questions: [
-        {
-          questionId: undefined,
-          questionName: "",
-          possibleAnswers: [
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            }
-          ]
-        }, {
-          questionId: undefined,
-          questionName: "",
-          possibleAnswers: [
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            },
-            {
-              possibleAnswerId: undefined,
-              answer: "",
-              isCorrect: false
-            }
-          ]
-        }
-      ]
+      questions: []
     };
+
+    for (let i = 0; i < 10; i++) {
+      this.examToSitDto.questions.push({
+        questionId: undefined,
+        questionName: "",
+        possibleAnswers: [
+          {
+            possibleAnswerId: undefined,
+            answer: "",
+            correct: false
+          },
+          {
+            possibleAnswerId: undefined,
+            answer: "",
+            correct: false
+          },
+          {
+            possibleAnswerId: undefined,
+            answer: "",
+            correct: false
+          },
+          {
+            possibleAnswerId: undefined,
+            answer: "",
+            correct: false
+          }
+        ]
+      })
+    }
 
     // 1. load exam via examId from url router redirect
     this.examId = this.activateRoute.snapshot.params['id'];
@@ -104,7 +95,6 @@ export class SitExamComponent implements OnInit {
 
     // 2. create form with subforms to accept user given answers
     this.sendExamWithResultAndAnswersFormGroup = this._formBuilder.group({
-      result: ['', Validators.required],
       userFormGroup: this._formBuilder.group({
         usernameControl: ['', Validators.required],
         passwordControl: ['', Validators.required]
@@ -124,9 +114,9 @@ export class SitExamComponent implements OnInit {
     });
 
     // 3. insert ExamDto values into html fields
-    // 4. on submit map form to ExamDto (possibly custom Dto)
+    // 4. on submit compute results and map form to ExamDto (possibly custom Dto)
     // 5. send ExamDto to backend via http
-    // 6. show success or error message in client
+    // 6. redirect results on success or error message in client
 
   }
 
@@ -135,6 +125,148 @@ export class SitExamComponent implements OnInit {
   sendExamWithResultAndAnswers(): void {
     console.log("sendExamWithResultAndAnswers");
     console.log(this.sendExamWithResultAndAnswersFormGroup);
+    let {result, givenAnswers} = this.calculateExamResults();
+
+    let sitExamPayload: SitExamPayload = {
+      result,
+      userDto: {
+        username: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('usernameControl')?.value,
+        password: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('passwordControl')?.value
+      },
+      examDto: {
+        examId: this.examToSitDto.examDto.examId,
+        examName: this.examToSitDto.examDto.examName
+      },
+      givenAnswers
+    };
+
+    console.log(sitExamPayload);
+
+    this.sitExamService.sitExam(sitExamPayload).subscribe(
+      (examResultDto: ExamResultDto) => {
+        console.log(examResultDto);
+        this.router.navigate(['/my-result/' + examResultDto.testResultId])
+      }, error => {
+        throwError(error);
+      }
+    );
+  }
+
+  calculateExamResults(): {result: number, givenAnswers: GivenAnswerDto[]} {
+
+    let result: number = 0;
+
+    let givenAnswers: GivenAnswerDto[] = [];
+
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 4; j++) {
+
+        if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer1Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer2Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer3Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer4Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer5Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer6Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer7Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer8Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer9Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer10Control')?.value.answer) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+
+          givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
+
+          if (this.examToSitDto.questions[i].possibleAnswers[j].correct) {
+            result++;
+          }
+        }
+
+      }
+    }
+
+    result = (result / 10) * 100;
+
+    return {result, givenAnswers};
   }
 
 }
