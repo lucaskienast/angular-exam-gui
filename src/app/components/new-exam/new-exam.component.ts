@@ -4,6 +4,7 @@ import {UserDto} from "../models/UserDto";
 import {NewExamPayload} from "./new-exam-payload";
 import {NewExamQuestionPayload} from "./new-exam-question-payload";
 import {NexExamService} from "./nex-exam.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-new-exam',
@@ -106,13 +107,22 @@ export class NewExamComponent implements OnInit {
 
   isLinear = false;
 
-  constructor(private _formBuilder: FormBuilder, private newExamService: NexExamService) { }
+  constructor(private _formBuilder: FormBuilder,
+              private newExamService: NexExamService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
 
   submitExamCreation(): void {
-    if (this.createExamForm.invalid) {
+
+    console.log((JSON.stringify(this.createExamForm
+      .get('questionFormGroups')
+      ?.get('firstQuestionFormGroup')
+      ?.get('correctAnswerControl')
+      ?.value) === JSON.stringify('answer1Control')));
+
+    if (this.createExamForm.valid) {
       console.log("FORM VALID");
 
       // create User Dto
@@ -122,9 +132,6 @@ export class NewExamComponent implements OnInit {
         email: undefined,
         password: this.createExamForm.get('userFormGroup')?.get('passwordControl')?.value,
       };
-
-      console.log('userDto');
-      console.log(userDto);
 
       // create new Exam Question Payload
       let questionList: NewExamQuestionPayload[] = [
@@ -141,11 +148,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('firstQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('firstQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -153,11 +160,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('firstQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('firstQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -165,11 +172,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('firstQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('firstQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -177,11 +184,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('firstQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('firstQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -198,11 +205,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('secondQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('secondQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -210,11 +217,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('secondQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('secondQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -222,11 +229,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('secondQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('secondQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -234,11 +241,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('secondQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('secondQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -255,11 +262,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('thirdQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('thirdQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -267,11 +274,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('thirdQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('thirdQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -279,11 +286,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('thirdQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('thirdQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -291,11 +298,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('thirdQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('thirdQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -312,11 +319,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fourthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fourthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -324,11 +331,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fourthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fourthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -336,11 +343,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fourthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fourthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -348,11 +355,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fourthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fourthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -369,11 +376,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fifthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fifthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -381,11 +388,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fifthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fifthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -393,11 +400,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fifthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fifthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -405,11 +412,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('fifthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('fifthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -426,11 +433,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('sixthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('sixthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -438,11 +445,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('sixthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('sixthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -450,11 +457,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('sixthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('sixthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -462,11 +469,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('sixthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('sixthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -483,11 +490,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('seventhQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('seventhQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -495,11 +502,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('seventhQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('seventhQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -507,11 +514,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('seventhQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('seventhQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -519,11 +526,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('seventhQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('seventhQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -540,11 +547,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('eigthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('eigthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -552,11 +559,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('eigthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('eigthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -564,11 +571,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('eigthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('eigthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -576,11 +583,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('eigthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('eigthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -597,11 +604,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('ninthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('ninthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -609,11 +616,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('ninthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('ninthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -621,11 +628,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('ninthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('ninthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -633,11 +640,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('ninthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('ninthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -654,11 +661,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('tenthQuestionFormGroup')
                 ?.get('answer1Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('tenthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer1Control'))
+                ?.value) === JSON.stringify('answer1Control'))
             },
             {
               answer: this.createExamForm
@@ -666,11 +673,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('tenthQuestionFormGroup')
                 ?.get('answer2Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('tenthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer2Control'))
+                ?.value) === JSON.stringify('answer2Control'))
             },
             {
               answer: this.createExamForm
@@ -678,11 +685,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('tenthQuestionFormGroup')
                 ?.get('answer3Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('tenthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer3Control'))
+                ?.value) === JSON.stringify('answer3Control'))
             },
             {
               answer: this.createExamForm
@@ -690,11 +697,11 @@ export class NewExamComponent implements OnInit {
                 ?.get('tenthQuestionFormGroup')
                 ?.get('answer4Control')
                 ?.value,
-              isCorrect: (JSON.stringify(this.createExamForm
+              correct: (JSON.stringify(this.createExamForm
                 .get('questionFormGroups')
                 ?.get('tenthQuestionFormGroup')
                 ?.get('correctAnswerControl')
-                ?.value.text) === JSON.stringify('answer4Control'))
+                ?.value) === JSON.stringify('answer4Control'))
             },
           ]
         },
@@ -715,7 +722,11 @@ export class NewExamComponent implements OnInit {
 
       // make request to API to create exam
       this.newExamService.createNewExam(newExamPayload).subscribe(
-        response => console.log(response),
+        response => {
+          console.log("Successfully uploaded new exam and will route to confirmation page.");
+          console.log(response);
+          this.router.navigate(['/exam-created']);
+        },
         error => console.log(error)
       );
 

@@ -24,6 +24,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MyResultComponent} from "./components/my-result/my-result.component";
 import { AllExamsComponent } from './components/all-exams/all-exams.component';
 import {MatTableModule} from "@angular/material/table";
+import { ExamCreatedComponent } from './components/exam-created/exam-created.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {MatTableModule} from "@angular/material/table";
     NewExamComponent,
     MyResultComponent,
     AllExamsComponent,
+    ExamCreatedComponent,
   ],
   imports: [
     BrowserModule,

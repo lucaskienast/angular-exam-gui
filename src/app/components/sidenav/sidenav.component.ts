@@ -30,6 +30,16 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterContentChecked(): void {
+    this.allExamsService.getAllExams().subscribe(
+      (results: WholeExamDto[]) => {
+        console.log(results);
+        this.wholeExams = results;
+      }, error => {
+        throwError(error);
+      });
+  }
+
   sitExam(examId: number): void {
     this.router.navigate(['/sit-exam/' + examId])
   }

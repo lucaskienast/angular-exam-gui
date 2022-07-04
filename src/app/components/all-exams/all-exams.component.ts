@@ -11,7 +11,6 @@ import {WholeExamDto} from "../models/WholeExamDto";
 export class AllExamsComponent implements OnInit {
 
   examResults: WholeExamDto[];
-  displayedColumns: string[] = ['Exam Name', ''];
 
   constructor(private allExamsService: AllExamsService) {
 
