@@ -1,5 +1,7 @@
 mat-toolbar {
   height: 60px;
+  position: sticky;
+  z-index:999;
 }
 
 .example-spacer {

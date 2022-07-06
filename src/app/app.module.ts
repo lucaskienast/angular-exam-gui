@@ -25,6 +25,7 @@ import {MyResultComponent} from "./components/my-result/my-result.component";
 import { AllExamsComponent } from './components/all-exams/all-exams.component';
 import {MatTableModule} from "@angular/material/table";
 import { ExamCreatedComponent } from './components/exam-created/exam-created.component';
+import { AllExamResultsComponent } from './components/all-exam-results/all-exam-results.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { ExamCreatedComponent } from './components/exam-created/exam-created.com
     MyResultComponent,
     AllExamsComponent,
     ExamCreatedComponent,
+    AllExamResultsComponent,
   ],
   imports: [
     BrowserModule,

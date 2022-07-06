@@ -5,10 +5,12 @@
 
 .sidenav-content {
   height: calc(100vh - 104px);
+  overflow:auto;
 }
 
 .sidenav {
   padding: 20px;
+  background-color: whitesmoke;
 }
 
 .list-btn {

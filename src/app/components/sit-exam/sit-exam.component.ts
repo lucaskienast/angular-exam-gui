@@ -7,6 +7,9 @@ import {throwError} from "rxjs";
 import {SitExamPayload} from "./sit-exam-payload";
 import {GivenAnswerDto} from "../models/GivenAnswerDto";
 import {ExamResultDto} from "../models/ExamResultDto";
+import {SidenavService} from "../sidenav/sidenav.service";
+import {WholeExamDto} from "../models/WholeExamDto";
+import {AllExamsService} from "../all-exams/all-exams.service";
 
 @Component({
   selector: 'app-sit-exam',
@@ -37,7 +40,9 @@ export class SitExamComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder,
               private activateRoute: ActivatedRoute,
               private sitExamService: SitExamService,
-              private router: Router) {
+              private router: Router,
+              private sidenavService: SidenavService,
+              private allExamsService: AllExamsService,) {
 
     this.examToSitDto = {
       examDto: {
@@ -118,9 +123,13 @@ export class SitExamComponent implements OnInit {
     // 5. send ExamDto to backend via http
     // 6. redirect results on success or error message in client
 
+    sidenavService.sitExamChangeEmitted$.subscribe(exam => {
+      this.examToSitDto = exam;
+    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   sendExamWithResultAndAnswers(): void {
     console.log("sendExamWithResultAndAnswers");
@@ -145,6 +154,7 @@ export class SitExamComponent implements OnInit {
     this.sitExamService.sitExam(sitExamPayload).subscribe(
       (examResultDto: ExamResultDto) => {
         console.log(examResultDto);
+        this.getAllExamsAndSendToSidenav();
         this.router.navigate(['/my-result/' + examResultDto.testResultId])
       }, error => {
         throwError(error);
@@ -158,11 +168,15 @@ export class SitExamComponent implements OnInit {
 
     let givenAnswers: GivenAnswerDto[] = [];
 
+    // loop thru questions -> i
+    // loop thru possible answers -> j
+    // if possible answer correct and given answer equal possible answer then add 1 to result
+
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 4; j++) {
 
-        if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer1Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer1Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -171,8 +185,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer2Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer2Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -181,8 +195,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer3Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer3Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -191,8 +205,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer4Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer4Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -201,8 +215,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer5Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer5Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -211,8 +225,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer6Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer6Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -221,8 +235,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer7Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer7Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -231,8 +245,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer8Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer8Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -241,8 +255,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer9Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer9Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -251,8 +265,8 @@ export class SitExamComponent implements OnInit {
           }
         }
 
-        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer10Control')?.value.answer) ===
-          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].answer)) {
+        else if (JSON.stringify(this.sendExamWithResultAndAnswersFormGroup.get('givenAnswersFormGroup')?.get('answer10Control')?.value.possibleAnswerId) ===
+          JSON.stringify(this.examToSitDto.questions[i].possibleAnswers[j].possibleAnswerId)) {
 
           givenAnswers.push({ possibleAnswer: this.examToSitDto.questions[i].possibleAnswers[j] });
 
@@ -266,7 +280,20 @@ export class SitExamComponent implements OnInit {
 
     result = (result / 10) * 100;
 
+    console.log(result);
+    console.log(givenAnswers);
+
     return {result, givenAnswers};
+  }
+
+  getAllExamsAndSendToSidenav(): void {
+    this.allExamsService.getAllExams().subscribe(
+      (results: WholeExamDto[]) => {
+        console.log(results);
+        this.sidenavService.emitChange(results);
+      }, error => {
+        throwError(error);
+      });
   }
 
 }

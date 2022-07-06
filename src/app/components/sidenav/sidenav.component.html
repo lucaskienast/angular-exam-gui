@@ -1,15 +1,15 @@
 <mat-drawer-container class="sidenav-container" autosize>
   <mat-drawer #drawer class="sidenav" mode="side">
-    <h3>All Exams</h3>
+    <h3><b>All Exams</b></h3>
     <div *ngFor="let exam of wholeExams; let i = index">
       <button *ngIf="showFiller !== i"
               (click)="showFiller = i" class="list-btn">
         {{ exam?.testName }}
       </button>
       <br *ngIf="showFiller === i">
-      <mat-card *ngIf="showFiller === i" class="mat-elevation-z4">
+      <mat-card *ngIf="showFiller === i" class="mat-elevation-z2">
         <mat-card-title>{{ exam?.testName }}</mat-card-title>
-        <mat-card-subtitle>{{ exam?.userDto?.username }}</mat-card-subtitle>
+        <mat-card-subtitle>by {{ exam?.userDto?.username }}</mat-card-subtitle>
         <mat-card-content>
           <p>No. participants: {{ exam?.testResultDtos?.length }}</p>
           <p>Avg. result: {{ computeAverageExamScore(exam?.testResultDtos) }}%</p>
@@ -19,7 +19,7 @@
           <button type="button" mat-button (click)="showFiller = undefined">
             <mat-icon>close</mat-icon>
           </button>
-          <button mat-raised-button>Results</button>
+          <button mat-raised-button (click)="showResults(exam?.testId)">Results</button>
           <button mat-raised-button
                   color="primary" (click)="sitExam(exam?.testId)">Sit</button>
         </mat-card-actions>

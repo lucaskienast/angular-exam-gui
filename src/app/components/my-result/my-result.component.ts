@@ -22,7 +22,8 @@ export class MyResultComponent implements OnInit {
 
     this.myResultService.getExamResultById(this.examResultId).subscribe(
       (examResultDto: ExamResultDto) => {
-      console.log(examResultDto);
+        console.log("MyResultComponent constructor -> myResultService.getExamResultById -> examResultDto");
+        console.log(examResultDto);
       this.examResult = examResultDto;
     }, error => {
       throwError(error);

@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserDto} from "../models/UserDto";
 import {NewExamPayload} from "./new-exam-payload";
 import {NewExamQuestionPayload} from "./new-exam-question-payload";
 import {NexExamService} from "./nex-exam.service";
 import {Router} from "@angular/router";
+import {AllExamsService} from "../all-exams/all-exams.service";
+import {WholeExamDto} from "../models/WholeExamDto";
+import {throwError} from "rxjs";
+import {SidenavService} from "../sidenav/sidenav.service";
 
 @Component({
   selector: 'app-new-exam',
@@ -109,7 +113,9 @@ export class NewExamComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder,
               private newExamService: NexExamService,
-              private router: Router) { }
+              private allExamsService: AllExamsService,
+              private router: Router,
+              private sidenavService: SidenavService) { }
 
   ngOnInit(): void {
   }
@@ -725,6 +731,7 @@ export class NewExamComponent implements OnInit {
         response => {
           console.log("Successfully uploaded new exam and will route to confirmation page.");
           console.log(response);
+          this.getAllExamsAndSendToSidenav();
           this.router.navigate(['/exam-created']);
         },
         error => console.log(error)
@@ -735,6 +742,16 @@ export class NewExamComponent implements OnInit {
       console.log("FORM INVALID");
     }
     console.log(this.createExamForm);
+  }
+
+  getAllExamsAndSendToSidenav(): void {
+    this.allExamsService.getAllExams().subscribe(
+      (results: WholeExamDto[]) => {
+        console.log(results);
+        this.sidenavService.emitChange(results);
+      }, error => {
+        throwError(error);
+      });
   }
 
 }

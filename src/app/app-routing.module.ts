@@ -6,6 +6,7 @@ import {NewExamComponent} from "./components/new-exam/new-exam.component";
 import {MyResultComponent} from "./components/my-result/my-result.component";
 import {AllExamsComponent} from "./components/all-exams/all-exams.component";
 import {ExamCreatedComponent} from "./components/exam-created/exam-created.component";
+import {AllExamResultsComponent} from "./components/all-exam-results/all-exam-results.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'new-exam', component: NewExamComponent },
   { path: 'all-exams', component: AllExamsComponent },
   { path: 'exam-created', component: ExamCreatedComponent },
+  { path: 'review-results/:id', component: AllExamResultsComponent },
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
