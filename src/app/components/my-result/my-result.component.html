@@ -1,6 +1,6 @@
 <h2 style="text-align: center">{{ examResult?.userDto?.username }} scored: {{ examResult?.result }}%</h2>
 <p style="text-align: center">Open the sidebar to look for this and other exams to see all results or to take part in one.</p>
-<hr><br>
+<br>
 <div *ngFor="let givenAnswer of examResult?.givenAnswerDtos; let i = index">
   <p style="text-align: center">
     <strong>Answer {{ i+1 }}:</strong>

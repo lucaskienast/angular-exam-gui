@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {AllExamResultsService} from "./all-exam-results.service";
 import {WholeExamDto} from "../models/WholeExamDto";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {throwError} from "rxjs";
 import {ExamResultDto} from "../models/ExamResultDto";
 
 export interface ExamResultTableElement {
+  id: number;
   position: number;
   username: string;
   result: number;
@@ -20,14 +21,15 @@ const ELEMENTAL_DATA: ExamResultTableElement[] = [];
 })
 export class AllExamResultsComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'username', 'result'];
+  displayedColumns: string[] = ['position', 'username', 'result', 'answers'];
   examId: number;
   wholeExamDto: WholeExamDto;
   allTestResults: ExamResultDto[];
   dataSource = ELEMENTAL_DATA;
 
   constructor(private allExamResultsService: AllExamResultsService,
-              private activateRoute: ActivatedRoute) {
+              private activateRoute: ActivatedRoute,
+              private router: Router,) {
 
     this.examId = this.activateRoute.snapshot.params['id'];
 
@@ -47,6 +49,10 @@ export class AllExamResultsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  redirectToStudentResults(resultId: number): void {
+    this.router.navigate(['/my-result/' + resultId])
+  }
+
   buildElementalData(wholeExamDto: WholeExamDto): ExamResultTableElement[] {
     console.log("buildElementalData");
 
@@ -54,6 +60,7 @@ export class AllExamResultsComponent implements OnInit {
 
     wholeExamDto.testResultDtos.forEach((examResultDto: ExamResultDto) => {
       tableElements.push({
+        id: examResultDto.testResultId,
         position: 0,
         username: examResultDto.userDto.username,
         result: examResultDto.result
@@ -69,7 +76,5 @@ export class AllExamResultsComponent implements OnInit {
     console.log(tableElements);
     return tableElements;
   }
-
-
 
 }
