@@ -7,6 +7,7 @@ import {ExamResultDto} from "../models/ExamResultDto";
 import {SidenavService} from "./sidenav.service";
 import {SitExamService} from "../sit-exam/sit-exam.service";
 import {GetExamToSitDto} from "../models/GetExamToSitDto";
+import {AllExamResultsService} from "../all-exam-results/all-exam-results.service";
 
 @Component({
   selector: 'app-sidenav',
@@ -22,7 +23,8 @@ export class SidenavComponent implements OnInit {
   constructor(private allExamsService: AllExamsService,
               private router: Router,
               private sidenavService: SidenavService,
-              private sitExamService: SitExamService) {
+              private sitExamService: SitExamService,
+              private allExamResultsService: AllExamResultsService,) {
 
     this.allExamsService.getAllExams().subscribe(
       (results: WholeExamDto[]) => {
@@ -66,7 +68,15 @@ export class SidenavComponent implements OnInit {
 
 
   showResults(examId: number): void {
-    this.router.navigate(['/review-results/' + examId])
+    this.allExamResultsService.getWholeExam(examId).subscribe(
+      (wholeExamDto: WholeExamDto) => {
+        console.log(wholeExamDto);
+        this.sidenavService.emitViewExamResultChange(wholeExamDto);
+        this.router.navigate(['/review-results/' + examId])
+      }, error => {
+        throwError(error);
+      }
+    );
   }
 
 }

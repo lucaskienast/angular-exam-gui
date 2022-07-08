@@ -21,5 +21,13 @@ export class SidenavService {
     this.emitSitExamChangeSource.next(change);
   }
 
+
+  private emitViewExamResultsChangeSource = new Subject<any>();
+  reviewExamResultsChangeEmitted$ = this.emitViewExamResultsChangeSource.asObservable();
+
+  emitViewExamResultChange(change: any) {
+    this.emitViewExamResultsChangeSource.next(change);
+  }
+
   constructor() { }
 }

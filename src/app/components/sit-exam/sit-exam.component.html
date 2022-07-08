@@ -1,5 +1,9 @@
 <form [formGroup]="sendExamWithResultAndAnswersFormGroup">
 
+  <br>
+
+  <p><b>{{ examToSitDto?.examDto?.examName }}</b></p>
+
   <mat-vertical-stepper [linear]="isLinear" #stepper animationDuration="1000">
 
     <div formGroupName="givenAnswersFormGroup">
@@ -16,8 +20,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer1Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -33,8 +35,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer2Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -50,8 +50,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer3Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -67,8 +65,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer4Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -84,8 +80,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer5Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -101,8 +95,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer6Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -118,8 +110,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer7Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -135,8 +125,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer8Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -152,8 +140,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer9Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -169,8 +155,6 @@
               {{possibleAnswer.answer}}
             </mat-radio-button>
           </mat-radio-group>
-          <div>Your answer: {{sendExamWithResultAndAnswersFormGroup
-            .get('givenAnswersFormGroup')?.get('answer10Control')?.value}}</div>
           <div>
             <button mat-button matStepperNext>Next</button>
           </div>
@@ -207,6 +191,9 @@
           <br>
           <mat-error *ngIf="sendExamWithResultAndAnswersFormGroup.invalid">
             Please fill out all fields, select the correct answers, and enter your credentials.
+          </mat-error>
+          <mat-error *ngIf="authError">
+            There was an error due to invalid credentials or because you have taken this exam before.
           </mat-error>
         </mat-step>
       </div>

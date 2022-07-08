@@ -4,6 +4,7 @@ import {WholeExamDto} from "../models/WholeExamDto";
 import {ActivatedRoute, Router} from "@angular/router";
 import {throwError} from "rxjs";
 import {ExamResultDto} from "../models/ExamResultDto";
+import {SidenavService} from "../sidenav/sidenav.service";
 
 export interface ExamResultTableElement {
   id: number;
@@ -29,7 +30,8 @@ export class AllExamResultsComponent implements OnInit {
 
   constructor(private allExamResultsService: AllExamResultsService,
               private activateRoute: ActivatedRoute,
-              private router: Router,) {
+              private router: Router,
+              private sidenavService: SidenavService,) {
 
     this.examId = this.activateRoute.snapshot.params['id'];
 
@@ -44,6 +46,11 @@ export class AllExamResultsComponent implements OnInit {
         throwError(error);
       }
     );
+
+    sidenavService.reviewExamResultsChangeEmitted$.subscribe(exam => {
+      this.wholeExamDto = exam;
+      this.dataSource = this.buildElementalData(this.wholeExamDto);
+    });
   }
 
   ngOnInit(): void {

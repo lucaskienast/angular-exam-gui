@@ -19,19 +19,8 @@ import {AllExamsService} from "../all-exams/all-exams.service";
 export class SitExamComponent implements OnInit {
 
   examId: number;
+  authError: boolean = false;
   examToSitDto: GetExamToSitDto;
-
-  answerControls: string[] = [
-    'answer1Control',
-    'answer2Control',
-    'answer3Control',
-    'answer4Control',
-    'answer6Control',
-    'answer7Control',
-    'answer8Control',
-    'answer9Control',
-    'answer10Control',
-  ];
 
   sendExamWithResultAndAnswersFormGroup: FormGroup;
 
@@ -134,32 +123,38 @@ export class SitExamComponent implements OnInit {
   sendExamWithResultAndAnswers(): void {
     console.log("sendExamWithResultAndAnswers");
     console.log(this.sendExamWithResultAndAnswersFormGroup);
-    let {result, givenAnswers} = this.calculateExamResults();
 
-    let sitExamPayload: SitExamPayload = {
-      result,
-      userDto: {
-        username: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('usernameControl')?.value,
-        password: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('passwordControl')?.value
-      },
-      examDto: {
-        examId: this.examToSitDto.examDto.examId,
-        examName: this.examToSitDto.examDto.examName
-      },
-      givenAnswers
-    };
+    if (this.sendExamWithResultAndAnswersFormGroup.valid) {
+      let {result, givenAnswers} = this.calculateExamResults();
 
-    console.log(sitExamPayload);
+      let sitExamPayload: SitExamPayload = {
+        result,
+        userDto: {
+          username: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('usernameControl')?.value,
+          password: this.sendExamWithResultAndAnswersFormGroup.get('userFormGroup')?.get('passwordControl')?.value
+        },
+        examDto: {
+          examId: this.examToSitDto.examDto.examId,
+          examName: this.examToSitDto.examDto.examName
+        },
+        givenAnswers
+      };
 
-    this.sitExamService.sitExam(sitExamPayload).subscribe(
-      (examResultDto: ExamResultDto) => {
-        console.log(examResultDto);
-        this.getAllExamsAndSendToSidenav();
-        this.router.navigate(['/my-result/' + examResultDto.testResultId])
-      }, error => {
-        throwError(error);
-      }
-    );
+      console.log(sitExamPayload);
+
+      this.sitExamService.sitExam(sitExamPayload).subscribe(
+        (examResultDto: ExamResultDto) => {
+          console.log(examResultDto);
+          this.getAllExamsAndSendToSidenav();
+          this.router.navigate(['/my-result/' + examResultDto.testResultId])
+        }, error => {
+          this.authError = true;
+          throwError(error);
+        }
+      );
+    } else {
+      console.log("FORM INVALID");
+    }
   }
 
   calculateExamResults(): {result: number, givenAnswers: GivenAnswerDto[]} {

@@ -17,6 +17,7 @@ import {SidenavService} from "../sidenav/sidenav.service";
 })
 export class NewExamComponent implements OnInit {
 
+  authError: boolean = false;
   answerControlNames: string[] = ["answer1Control", "answer2Control", "answer3Control", "answer4Control"];
 
   createExamForm = this._formBuilder.group({
@@ -731,12 +732,15 @@ export class NewExamComponent implements OnInit {
         response => {
           console.log("Successfully uploaded new exam and will route to confirmation page.");
           console.log(response);
+          this.authError = false;
           this.getAllExamsAndSendToSidenav();
           this.router.navigate(['/exam-created']);
         },
-        error => console.log(error)
+        error => {
+          this.authError = true;
+          throwError(error);
+        }
       );
-
     } else {
       // do not make request to API
       console.log("FORM INVALID");

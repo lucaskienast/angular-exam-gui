@@ -34,7 +34,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('firstQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -69,7 +68,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('secondQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -104,7 +102,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('thirdQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -139,7 +136,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('fourthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -174,7 +170,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('fifthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -209,7 +204,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('sixthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -244,7 +238,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('seventhQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -279,7 +272,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('eighthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -314,7 +306,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('ninthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -349,7 +340,6 @@
                 </mat-form-field>
               </mat-radio-button>
             </mat-radio-group>
-            <div>Correct answer: {{createExamForm.get('questionFormGroups')?.get('tenthQuestionFormGroup')?.get('correctAnswerControl')?.value}}</div>
             <div>
               <button mat-button matStepperNext>
                 Next
@@ -387,7 +377,10 @@
           </div>
           <br>
           <mat-error *ngIf="createExamForm.invalid">
-            Please fill out all fields, select the correct answers, and enter your credentials.
+            Please fill out all fields and mark the correct answers.
+          </mat-error>
+          <mat-error *ngIf="authError">
+            There was an error due to invalid credentials or because an exam with this name already exists.
           </mat-error>
         </mat-step>
       </div>
